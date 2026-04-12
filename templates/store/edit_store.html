@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}editar{% endblock %}
+
+{% block content %}
+<h3>Editar perfil da loja</h3>
+<form action="{{ url_for("store.editstore") }}" method="POST">
+  <label>
+    Nome da loja: <input type="text" name="nomeLj" value="{{ current_user.viewname }}">
+  </label><br>
+  <label>
+    Descrição: <input type="text" name="descricaoLj" value="{{ current_user.descricao }}">
+  </label><br>
+  <input type="submit" name="enviar" value="salvar">
+</form>
+<p></p>
+<a href="{{ url_for("store.editprodutos") }}">Editar produtos</a>
+{% endblock %}

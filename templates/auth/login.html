@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+<form action="{{ url_for("auth.login") }}" method="POST">
+  Nome de usuário: <input type="text" name="nomeLogin">
+  senha: <input type="password" name="senhaLogin"><br>
+  <input type="submit" name="enviar" value="entrar">
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}perfil{% endblock %}
+
+{% block content %}
+<h3>{{ loja.viewname }}</h3>
+<p>{{ loja.descricao }}</p>
+<p></p>
+{% if loja.username == current_user.username %}
+<a href="{{ url_for("store.editstore") }}">Editar loja</a>
+<p></p>
+{% endif %}
+{% set visiveis = produtos | selectattr("mostrar") | list %}
+{% if visiveis %}
+<a href="{{ url_for("store.produtos", loja=loja.username) }}">Ver produtos</a>
+<p></p>
+{% endif %}
+<a href="{{ url_for("home") }}">home</a>
+{% endblock %}
