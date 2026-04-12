@@ -15,4 +15,7 @@
 </form>
 <p></p>
 <a href="{{ url_for("store.editprodutos") }}">Editar produtos</a>
+<form action="{{ url_for('auth.delconta') }}" method="POST">
+    <button type="submit" name="delconta" value="deletar">Excluir conta</button>
+</form>
 {% endblock %}

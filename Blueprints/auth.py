@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for, session, redirect, B
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
-from models import Loja
+from models import Loja, Produtos
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -59,5 +59,26 @@ def logout():
     logout = request.form.get("logout")
     if logout:
         logout_user()
+        
+    return redirect(url_for("home"))
+
+# Deletar conta
+    
+@auth_bp.route("/delconta", methods=["POST"])
+@login_required
+def delconta():
+    
+    conta = Loja.query.filter_by(id=current_user.id).first()
+    
+    produtos = Produtos.query.filter_by(loja_id=current_user.id).all()
+    
+    delete_conta = request.form.get("delconta")
+    if delete_conta == "deletar":
+        db.session.delete(conta)
+        
+        for produto in produtos:
+            db.session.delete(produto)
+        
+        db.session.commit()
         
     return redirect(url_for("home"))

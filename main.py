@@ -9,7 +9,7 @@ from Blueprints.store import store_bp
 
 app = Flask(__name__)
 load_dotenv()
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = os.getenv("SECRET_KEY")
 
 # Config db
 

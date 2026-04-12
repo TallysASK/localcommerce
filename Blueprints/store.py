@@ -16,7 +16,7 @@ def store(username):
          
     produtos = loja.produtos
     
-    return render_template("store/store.html", loja=loja, produtos = produtos)
+    return render_template("store/store.html", loja=loja, produtos=produtos)
 
 # Editar perfil loja   
 
@@ -53,46 +53,13 @@ def produtos(loja):
     produtos = loja_obj.produtos
     
     return render_template("store/produtos.html", loja=loja_obj, produtos=produtos)
-
-# Editar produtos
-
-@store_bp.route("/produtos/edit", methods=["GET", "POST"])
-@login_required
-def editprodutos():
-    produtos = Produtos.query.filter_by(loja_id=current_user.id)
-
-    if request.method == "POST":
-
-        for produto in produtos:
-
-            nome = request.form.get(f"nomeProduto_{produto.id}").strip()
-            preco = request.form.get(f"precoProduto_{produto.id}")
-            quant = request.form.get(f"quantProduto_{produto.id}")
-            mostrar = request.form.get(f"mostrarProduto_{produto.id}")
-
-            if nome:
-                produto.nome = nome
-
-            if preco:
-                produto.preco = float(preco)
-
-            if quant:
-                produto.quantidade = int(quant)
-                
-            if mostrar is not None:
-                produto.mostrar = (mostrar == "Sim")
-
-        db.session.commit()
-        return redirect(url_for("store.produtos", loja=current_user.username))
-        
-    return render_template("store/edit_produtos.html", produtos=produtos)
     
 # Adicionar produtos
 
 @store_bp.route("/produtos/add",  methods=["POST"])
 @login_required
 def addprodutos():
-    addnome = request.form.get("nomeProdutoAdd").strip()
+    addnome = request.form.get("nomeProdutoAdd", "").strip()
     addpreco = request.form.get("precoProdutoAdd")        
     addquant = request.form.get("quantProdutoAdd")                
     addmostrar = request.form.get("mostrarProdutoAdd") == "Sim"
@@ -113,3 +80,42 @@ def addprodutos():
     db.session.commit()
         
     return redirect(url_for("store.produtos", loja=current_user.username))
+    
+# Editar produtos
+
+@store_bp.route("/produtos/edit", methods=["GET", "POST"])
+@login_required
+def editprodutos():
+    produtos = Produtos.query.filter_by(loja_id=current_user.id).all()
+
+    if request.method == "POST":
+
+        for produto in produtos:
+
+            deletar_produto = request.form.get(f"delproduto_{produto.id}")
+            
+            if deletar_produto == "excluir produto":
+                db.session.delete(produto)
+                continue
+                
+            nome = request.form.get(f"nomeProduto_{produto.id}", "").strip()
+            preco = request.form.get(f"precoProduto_{produto.id}")
+            quant = request.form.get(f"quantProduto_{produto.id}")
+            mostrar = request.form.get(f"mostrarProduto_{produto.id}")
+    
+            if nome:
+                produto.nome = nome
+    
+            if preco:
+                produto.preco = float(preco)
+    
+            if quant:
+                produto.quantidade = int(quant)
+                    
+            if mostrar is not None:
+                produto.mostrar = (mostrar == "Sim")
+  
+        db.session.commit()
+        return redirect(url_for("store.produtos", loja=current_user.username))
+        
+    return render_template("store/edit_produtos.html", produtos=produtos)
