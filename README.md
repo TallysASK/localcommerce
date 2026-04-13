@@ -1,6 +1,6 @@
 # LocalCommerce
 
-Projeto de hub virtual de lojas locais feito com Flask.
+Plataforma web de catálogo de lojas locais, desenvolvido com flask.
 
 ## Funcionalidades
 
