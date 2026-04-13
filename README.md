@@ -1,6 +1,6 @@
 # LocalCommerce
 
-Plataforma web de catálogo de lojas locais, desenvolvido com flask.
+Plataforma web de catálogo de lojas locais, desenvolvida com flask.
 
 ## Funcionalidades
 
