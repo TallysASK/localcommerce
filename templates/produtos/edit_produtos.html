@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Editar produtos{% endblock %}
+
+{% block content %}
+<h2>Produtos</h2>
+{% if produtos %}
+<form action="{{ url_for("prod.editprodutos") }}" method="POST">
+  <h3>Produtos</h3>
+  <ul>
+    {% for produto in produtos %}
+    <li>
+      <label>
+        <input type="text" name="nomeProduto_{{ produto.id }}" value="{{ produto.nome }}">
+        <label><br>
+      <label>
+        R$<input type="number" step="0.01" name="precoProduto_{{ produto.id }}" value="{{ produto.preco }}">
+        </label><br>
+      <label>
+        Estoque: <input type="number" name="quantProduto_{{ produto.id }}" value="{{ produto.quantidade }}">
+      </label><br>
+        Mostrar: 
+      <label>
+        <input type="radio" name="mostrarProduto_{{ produto.id }}" value="Sim" {% if produto.mostrar %}checked{% endif %}> Sim
+      </label>
+      <label>
+        <input type="radio" name="mostrarProduto_{{ produto.id }}" value="Nao" {% if not produto.mostrar %}checked{% endif %}> Não
+      </label>
+      <input type="submit" name="delproduto_{{ produto.id }}" value="excluir produto">
+    </li>
+    {% endfor %}
+  </ul>
+  <input type="submit" name="confirmar" value="confirmar alterações">
+</form>
+{% else %}
+<p>Não há produtos para editar</p>
+{% endif %}
+
+<!-- Adicionar produto -->
+
+<form action="{{ url_for("prod.addprodutos") }}" method="POST">
+  <h3>Adicionar produto</h3>
+  <label>
+    nome do produto: <input type="text" name="nomeProdutoAdd">
+  </label><br>
+  <label>
+    preço: R$<input type="number" step="0.01" name="precoProdutoAdd">
+  </label><br>
+  <label>
+    quantidade: <input type="number" name="quantProdutoAdd">
+  </label><br>
+    Mostrar produto: 
+  <label>
+    <input type="radio" name="mostrarProdutoAdd" value="Sim" checked> Sim
+  </label>
+  <label>
+    <input type="radio" name="mostrarProdutoAdd" value="Nao"> Não
+  </label><br>
+  <input type="submit" name="salvar" value="salvar">
+</form>
+{% endblock %}

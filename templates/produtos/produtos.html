@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}produtos{% endblock %}
+
+{% block content %}
+<h2>Produtos</h2>
+{% set visiveis = produtos | selectattr("mostrar") | list %}
+{% if visiveis %}
+<ul>
+  {% for produto in visiveis %}
+  <li>
+    {{ produto.nome }}<br>
+    R$ {{ "%.2f"|format(produto.preco) }}<br>
+    quantidade: {{ produto.quantidade }}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Nenhum produto a mostra</p>
+{% endif %}
+{% if current_user.id == loja.id %}
+<a href="{{ url_for("prod.editprodutos") }}">Editar produtos</a>
+{% endif %}
+{% endblock %}
