@@ -10,8 +10,15 @@
   {% for produto in visiveis %}
   <li>
     {{ produto.nome }}<br>
+    {% if produto.preco != 0 %}
     R$ {{ "%.2f"|format(produto.preco) }}<br>
-    quantidade: {{ produto.quantidade }}
+    {% endif %}
+    {% if produto.quantidade != 0 %}
+    quantidade: {{ produto.quantidade }}<br>
+    {% endif %}
+    {% if produto.categoria.nome %}
+    categoria: {{ produto.categoria.nome }}
+    {% endif %}
   </li>
   {% endfor %}
 </ul>

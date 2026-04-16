@@ -4,6 +4,9 @@
 
 {% block content %}
 <h2>Produtos</h2>
+
+<!-- Editar produtos -->
+
 {% if produtos %}
 <form action="{{ url_for("prod.editprodutos") }}" method="POST">
   <h3>Produtos</h3>
@@ -56,6 +59,19 @@
   <label>
     <input type="radio" name="mostrarProdutoAdd" value="Nao"> Não
   </label><br>
-  <input type="submit" name="salvar" value="salvar">
+  Categoria: <select name="categoria_id">
+    <option value="">Nenhuma</option>
+    {% for categoria in categorias %}
+    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+    {% endfor %}
+  </select>
+      <a href="{{ url_for("prod.editprodutos", nova_categoria=1) }}">criar categoria</a><br>
+      <input type="submit" name="salvar" value="salvar">
 </form>
+{% if mostrar_input_categoria %}
+<form method="POST" action="{{ url_for("prod.addcategoria") }}">
+    <input type="text" name="nomeCategoriaForm" placeholder="Nome da categoria">
+    <button type="submit">Criar</button>
+</form>
+{% endif %}
 {% endblock %}

@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, url_for, session, redirect
-from flask_login import LoginManager, login_required, login_user, logout_user, current_user
+from flask_login import LoginManager
 import os
 from dotenv import load_dotenv
 from db import db
 from models import Loja
 from Blueprints.auth import auth_bp
 from Blueprints.store import store_bp
+from Blueprints.produtos import prod_bp
 
 app = Flask(__name__)
 load_dotenv()
@@ -42,6 +43,7 @@ def home():
 
 app.register_blueprint (auth_bp)
 app.register_blueprint (store_bp)
+app.register_blueprint (prod_bp)
 
 # Inicializar
         
