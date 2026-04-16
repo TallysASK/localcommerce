@@ -7,6 +7,7 @@ Plataforma web de catálogo de lojas locais, desenvolvida com flask.
 - Cadastro e login de lojas
 - Adição de produtos
 - Edição e exclusão de produtos
+- Classificação de produtos em categorias
 
 ## Tecnologias
 
