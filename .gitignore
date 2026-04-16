@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
-instance/
 *.db
 .env
 *.save
+instance/*
+!instance/.gitkeep
